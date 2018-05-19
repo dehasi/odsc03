@@ -50,7 +50,7 @@ public class Sem {
                 boolean done = false;
                 for (; j < length; j++) {
                     if (chars[j] == '1') {
-                        newi = j+1;
+                        newi = j;
                         System.arraycopy(chars, i+1, chars, i, j-i);
                         ++rem;
                         done = true;
