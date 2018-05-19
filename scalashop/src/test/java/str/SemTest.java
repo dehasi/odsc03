@@ -34,4 +34,9 @@ public class SemTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void test2() {
+        String actual = sem.stringUtilsNoPreCheck(input);
+        Assert.assertEquals(expected, actual);
+    }
 }
