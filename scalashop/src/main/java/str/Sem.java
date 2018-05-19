@@ -46,6 +46,7 @@ public class Sem {
             if (chars[i] == '1') {
                 int j = i+1;
                 int newi = i;
+                ++rem;
                 boolean done = false;
                 for (; j < length; j++) {
                     if (chars[j] == '1') {
@@ -58,7 +59,6 @@ public class Sem {
                 }
                 if (!done) {
                     System.arraycopy(chars, i+1, chars, i, length-i-1);
-                    ++rem;
                     break;
                 }
                 i = newi;
