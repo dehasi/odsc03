@@ -44,7 +44,14 @@ object HorizontalBoxBlur {
   def blur(src: Img, dst: Img, from: Int, end: Int, radius: Int): Unit = {
   // TODO implement this method using the `boxBlurKernel` method
 
-  ???
+    val blured = for {
+      x <- 0 until src.width
+      y <- from until end
+      if 0 <= y && y < src.height
+    } yield {
+      val c = boxBlurKernel(src, x, y, radius)
+      dst.update(x, y, c)
+    }
   }
 
   /** Blurs the rows of the source image in parallel using `numTasks` tasks.
