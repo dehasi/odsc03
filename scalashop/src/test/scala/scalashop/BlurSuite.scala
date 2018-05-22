@@ -30,7 +30,7 @@ class BlurSuite extends FunSuite {
 
     assert(boxBlurKernel(src, 1, 2, 1) === 12,
       s"(boxBlurKernel(1, 2, 1) should be 12, " +
-        s"but it's ${boxBlurKernel(src, 1, 2, 1)})")
+        s"but it's") // ${boxBlurKernel(src, 1, 2, 1)})
   }
 
   test("HorizontalBoxBlur.blur with radius 1 should correctly blur the first two rows of a 3x3 image") {
@@ -91,3 +91,4 @@ class BlurSuite extends FunSuite {
 
 
 }
+//36 / 25

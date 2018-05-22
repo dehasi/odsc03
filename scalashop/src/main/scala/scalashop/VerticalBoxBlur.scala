@@ -44,8 +44,9 @@ object VerticalBoxBlur {
   def blur(src: Img, dst: Img, from: Int, end: Int, radius: Int): Unit = {
     // TODO implement this method using the `boxBlurKernel` method
     val blured = for {
-      x <- from to end
-      y <- 0 to src.height
+      x <- from until end
+      y <- 0 until src.height
+      if 0 <= x && x < src.width
     } yield {
       val c = boxBlurKernel(src, x, y, radius)
       dst.update(x, y, c)
@@ -64,7 +65,7 @@ object VerticalBoxBlur {
     val chunk = src.width/ numTasks
     for {
       t <- 0 to numTasks
-    } yield task( blur(src,dst,t*chunk,(t+1)*chunk,radius))
+    } yield common.task( blur(src,dst,t*chunk,(t+1)*chunk,radius))
   }
 
 }

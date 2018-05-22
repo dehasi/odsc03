@@ -43,11 +43,16 @@ package object scalashop {
     else {
       // TODO implement using while loops
       val t = {
-        for {i <- x - radius until  x + radius
-             j <- y - radius until y + radius
-        } yield src.apply(i, j)
-      }.sum - src.apply(x, y)
-      t /(2*radius+1)*(2*radius+1)
+        for {
+          i <- (x - radius) to (x + radius)
+          j <- (y - radius) to (y + radius)
+          if 0 <= i && i < src.width
+          if 0 <= j && j < src.height
+        } yield {
+          src.apply(i, j)
+        }
+      }
+      t.sum  / t.size
     }
   }
 
