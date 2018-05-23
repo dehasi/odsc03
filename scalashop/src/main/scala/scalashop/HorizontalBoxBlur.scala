@@ -66,7 +66,7 @@ object HorizontalBoxBlur {
   // TODO implement using the `task` construct and the `blur` method
   val chunk = src.height/ numTasks
     for {
-      t <- 0 until numTasks
+      t <- 0 until  (if (chunk == 0) src.height else numTasks)
     } yield common.task( blur(src,dst,t*chunk,(t+1)*chunk,radius))
   }
 
