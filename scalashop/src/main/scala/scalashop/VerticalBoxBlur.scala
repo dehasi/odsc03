@@ -64,7 +64,7 @@ object VerticalBoxBlur {
 
     val chunk = src.width/ numTasks
     for {
-      t <- 0 until  numTasks
+      t <- 0 until  (if (chunk == 0) src.width else numTasks)
     } yield common.task( blur(src,dst,t*chunk,(t+1)*chunk,radius))
   }
 

@@ -33,7 +33,9 @@ package object scalashop {
   /** Image is a two-dimensional matrix of pixel values. */
   class Img(val width: Int, val height: Int, private val data: Array[RGBA]) {
     def this(w: Int, h: Int) = this(w, h, new Array(w * h))
+
     def apply(x: Int, y: Int): RGBA = data(y * width + x)
+
     def update(x: Int, y: Int, c: RGBA): Unit = data(y * width + x) = c
   }
 
@@ -42,17 +44,20 @@ package object scalashop {
     if (radius == 0) src.apply(x, y)
     else {
       // TODO implement using while loops
-      val t = {
+      val tuples = {
         for {
           i <- (x - radius) to (x + radius)
           j <- (y - radius) to (y + radius)
           if 0 <= i && i < src.width
           if 0 <= j && j < src.height
         } yield {
-          src.apply(i, j)
+          val c = src.apply(i, j)
+          (red(c), green(c), blue(c), alpha(c))
         }
       }
-      t.sum  / t.size
+      val summed = (tuples.map(_._1).sum, tuples.map(_._2).sum, tuples.map(_._3).sum, tuples.map(_._4).sum)
+      val size = tuples.size
+      rgba(summed._1/size, summed._2/size, summed._3/size, summed._4/size)
     }
   }
 
