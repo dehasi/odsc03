@@ -4,13 +4,12 @@ import common._
 
 import scala.util.Sorting
 
-trait Sort {
+object Sort {
 
 
   def parMergeSort(xs: Array[Int], maxDepth: Int): Unit = {
     val ys = new Array[Int](xs.length)
 
-    def merge(src: Array[Int], dst: Array[Int], from: Int, mid: Int, until: Int): Unit = {}
 
     def sort(from: Int, until: Int, depth: Int): Unit = {
       if (depth == maxDepth) {
@@ -25,7 +24,34 @@ trait Sort {
         merge(src, dst, from, mid, until)
       }
     }
-    sort(0,xs.length, 0)
 
+    sort(0, xs.length, 0)
+
+  }
+
+  def merge(src: Array[Int], dst: Array[Int], from: Int, mid: Int, until: Int): Unit = {
+    var i, k = from
+    var j = mid
+    while (i < mid && j < until) {
+      if (src(i) < src(j)) {
+        dst(k) = src(i)
+        i += 1
+      } else {
+        dst(k) = src(j)
+        j += 1
+      }
+      k += 1
+    }
+    while (i < mid) {
+      dst(k) = src(i)
+      i += 1
+      k += 1
+    }
+
+    while (j < until) {
+      dst(k) = src(j)
+      j += 1
+      k += 1
+    }
   }
 }
