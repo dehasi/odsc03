@@ -21,4 +21,10 @@ class SortTest extends FunSuite {
     assert(dst sameElements Array[Int](0, 0, 1, 1, 2, 2, 0, 0))
   }
 
+  test("sort sorts"){
+    val src = Array[Int](3, 4, 1, 2)
+    Sort.parMergeSort(src, 4)
+
+    assert(src sameElements Array[Int](1,2,3,4))
+  }
 }
