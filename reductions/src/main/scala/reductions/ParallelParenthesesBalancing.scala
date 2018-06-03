@@ -41,7 +41,21 @@ object ParallelParenthesesBalancing {
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
    */
   def balance(chars: Array[Char]): Boolean = {
-    ???
+    def isOpenBrace(char: Char) = char == '('
+
+    def isClosedBrace(char: Char) = char == ')'
+
+    def isBrace(char: Char) = isOpenBrace(char) || isClosedBrace(char)
+
+    def balance(chars: Array[Char], stack: Int): Boolean = {
+      if (chars.isEmpty) stack.equals(0)
+      else if (isOpenBrace(chars.head)) balance(chars.tail, stack + 1)
+      else if (stack == 0) false
+      else balance(chars.tail, stack - 1)
+    }
+
+    val list = chars.filter(c => isBrace(c))
+    balance(list, 0)
   }
 
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
