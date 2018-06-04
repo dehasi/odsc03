@@ -71,9 +71,9 @@ class KMeans {
 
   @tailrec
   final def kMeans(points: GenSeq[Point], means: GenSeq[Point], eta: Double): GenSeq[Point] = {
-    if (converged(eta)(means, points)) {
-      val classified = classify(points, means)
-      val newMeans = update(classified, means)
+    val classified = classify(points, means)
+    val newMeans = update(classified, means)
+    if (!converged(eta)(means, newMeans)) {
       kMeans(points, newMeans, eta)
     }
     else means // your implementation need to be tail recursive
