@@ -66,6 +66,9 @@ class KMeans {
     for (i <- 0 until oldMeans.length) {
       if ((oldMeans(i) squareDistance newMeans(i)) > eta * eta) false
     }
+
+//    oldMeans.zip(newMeans)  map ( ( squareDistance n) > eta * eta) fold(true)
+
     true
   }
 
