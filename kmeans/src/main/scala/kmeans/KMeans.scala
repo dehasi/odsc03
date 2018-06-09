@@ -63,11 +63,10 @@ class KMeans {
   }
 
   def converged(eta: Double)(oldMeans: GenSeq[Point], newMeans: GenSeq[Point]): Boolean = {
-    for (i <- 0 until oldMeans.length) {
-      if ((oldMeans(i) squareDistance newMeans(i)) > eta * eta) false
-    }
 
-//    oldMeans.zip(newMeans)  map ( ( squareDistance n) > eta * eta) fold(true)
+    for( e <-oldMeans zip newMeans ) {
+      if ((e._1 squareDistance e._2) > eta) return false
+    }
 
     true
   }
