@@ -144,10 +144,15 @@ package object barneshut {
         case Fork(nw, ne, sw, se) =>
           // see if node is far enough from the body,
           // or recursion is needed
-          traverse(nw)
-          traverse(ne)
-          traverse(sw)
-          traverse(se)
+          val dist = distance(quad.massX, quad.massY, x, y)
+          if(quad.size / dist < theta)
+            addForce(quad.mass, quad.massX, quad.massY)
+          else {
+            traverse(nw)
+            traverse(ne)
+            traverse(sw)
+            traverse(se)
+          }
       }
 
       traverse(quad)
