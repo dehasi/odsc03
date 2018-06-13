@@ -48,19 +48,19 @@ package object barneshut {
     def massY: Float = centerY
     def mass: Float = 0
     def total: Int = 0
-    def insert(b: Body): Quad = ???
+    def insert(b: Body): Quad = Leaf(centerX,centerY,size, Seq(b))
   }
 
   case class Fork(
     nw: Quad, ne: Quad, sw: Quad, se: Quad
   ) extends Quad {
-    val centerX: Float = ???
-    val centerY: Float = ???
-    val size: Float = ???
+    val centerX: Float = (nw.centerX + ne.centerX + sw.centerX + se.centerX) / 4
+    val centerY: Float = (nw.centerY + ne.centerY + sw.centerY + se.centerY) / 4
+    val size: Float = nw.size + ne.size + sw.size + se.size
     val mass: Float = nw.mass + ne.mass + sw.mass+se.mass
-    val massX: Float = (nw.mass*nw.centerX + ne.mass*ne.centerX + sw.mass*sw.centerX + se.mass*se.centerX)/mass
-    val massY: Float = (nw.mass*nw.centerY + ne.mass*ne.centerY + sw.mass*sw.centerY + se.mass*se.centerY)/mass
-    val total: Int = ???
+    val massX: Float = (nw.mass*nw.massX + ne.mass*ne.massX + sw.mass*sw.massX + se.mass*se.massX)/mass
+    val massY: Float = (nw.mass*nw.massY + ne.mass*ne.massY + sw.mass*sw.massY + se.mass*se.massY)/mass
+    val total: Int = nw.total + ne.total + sw.total + se.total
 
     def insert(b: Body): Fork = {
       ???
@@ -69,9 +69,14 @@ package object barneshut {
 
   case class Leaf(centerX: Float, centerY: Float, size: Float, bodies: Seq[Body])
   extends Quad {
-    val (mass, massX, massY) = (??? : Float, ??? : Float, ??? : Float)
-    val total: Int = ???
-    def insert(b: Body): Quad = ???
+    val mass_ = bodies.map(b=>b.mass).sum
+    val (mass, massX, massY) = (mass_,
+      bodies.map(b=> b.x*b.mass).sum/mass_ : Float,
+      bodies.map(b=> b.y*b.mass).sum/mass_ : Float)
+    val total: Int = bodies.size
+    def insert(b: Body): Quad =
+      if (total < 4) Leaf(centerX,centerY, size, bodies:+b)
+      else ???
   }
 
   def minimumSize = 0.00001f
