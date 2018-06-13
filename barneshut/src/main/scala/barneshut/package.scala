@@ -63,7 +63,12 @@ package object barneshut {
     val total: Int = nw.total + ne.total + sw.total + se.total
 
     def insert(b: Body): Fork = {
-      ???
+      if (b.y < centerY)
+        if (b.x < centerX) Fork(nw.insert(b), ne,sw,se)
+        else Fork(nw, ne,sw.insert(b),se)
+      else
+        if (b.x < centerX) Fork(nw, ne.insert(b),sw,se)
+        else Fork(nw, ne,sw,se.insert(b))
     }
   }
 
