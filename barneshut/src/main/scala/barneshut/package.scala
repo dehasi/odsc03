@@ -80,8 +80,15 @@ package object barneshut {
       bodies.map(b=> b.y*b.mass).sum/mass_ : Float)
     val total: Int = bodies.size
     def insert(b: Body): Quad =
-      if (total < 4) Leaf(centerX,centerY, size, bodies:+b)
-      else ???
+      if (total < size) Leaf(centerX,centerY, size, bodies:+b)
+      else {
+        val (new_l_x, new_h_x, new_l_y, new_h_y) = (centerX - size / 4, centerX + size / 4, centerY - size / 4, centerY + size / 4)
+        val n_nw = Empty(new_l_x, new_l_y, size / 2)
+        val n_sw = Empty(new_l_x, new_h_y, size / 2)
+        val n_ne = Empty(new_h_x, new_l_y, size / 2)
+        val n_se = Empty(new_h_x, new_h_y, size / 2)
+        (bodies :+ b).foldLeft(Fork(n_nw, n_ne, n_sw, n_se))((a, b) => a.insert(b))
+      }
   }
 
   def minimumSize = 0.00001f
@@ -133,9 +140,14 @@ package object barneshut {
           // no force
         case Leaf(_, _, _, bodies) =>
           // add force contribution of each body by calling addForce
+          bodies.foreach(b => addForce(b.mass, b.x, b.y))
         case Fork(nw, ne, sw, se) =>
           // see if node is far enough from the body,
           // or recursion is needed
+          traverse(nw)
+          traverse(ne)
+          traverse(sw)
+          traverse(se)
       }
 
       traverse(quad)
