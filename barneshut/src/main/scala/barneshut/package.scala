@@ -80,7 +80,7 @@ package object barneshut {
       bodies.map(b=> b.y*b.mass).sum/mass_ : Float)
     val total: Int = bodies.size
     def insert(b: Body): Quad =
-      if (size < minimumSize) Leaf(centerX,centerY, size, bodies:+b)
+      if (size <= minimumSize) Leaf(centerX,centerY, size, bodies:+b)
       else {
         val (new_l_x, new_h_x, new_l_y, new_h_y) = (centerX - size / 4, centerX + size / 4, centerY - size / 4, centerY + size / 4)
         val nnw = Empty(new_l_x, new_l_y, size / 2)
