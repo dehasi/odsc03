@@ -176,7 +176,11 @@ package object barneshut {
 
     def +=(b: Body): SectorMatrix = {
 
-      ???
+      val tx = ((b.x - boundaries.minX) / (boundaries.width / sectorPrecision)).toInt
+      val ty = ((b.y - boundaries.minY) / (boundaries.height / sectorPrecision)).toInt
+      val fx = if (tx < sectorPrecision) tx else sectorPrecision - 1
+      val fy = if (ty < sectorPrecision) ty else sectorPrecision - 1
+      this.apply(fx, fy) += b
       this
     }
 
