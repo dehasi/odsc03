@@ -4,6 +4,7 @@ import java.awt._
 import java.awt.event._
 import javax.swing._
 import javax.swing.event._
+
 import scala.collection.parallel.TaskSupport
 import scala.collection.parallel.Combiner
 import scala.collection.parallel.mutable.ParHashSet
@@ -12,11 +13,21 @@ import common._
 class Simulator(val taskSupport: TaskSupport, val timeStats: TimeStatistics) {
 
   def updateBoundaries(boundaries: Boundaries, body: Body): Boundaries = {
-    ???
+    val b = new  Boundaries
+    b.minX = scala.math.min(boundaries.minX, body.x)
+    b.maxX = scala.math.min(boundaries.maxX, body.x)
+    b.minY = scala.math.min(boundaries.minY, body.x)
+    b.maxY = scala.math.min(boundaries.maxY, body.x)
+    b
   }
 
   def mergeBoundaries(a: Boundaries, b: Boundaries): Boundaries = {
-    ???
+    val c = new  Boundaries
+    c.minX = scala.math.min(a.minX, b.minX)
+    c.maxX = scala.math.max(a.maxX, b.maxX)
+    c.minY = scala.math.min(a.minY, b.minY)
+    c.maxY = scala.math.max(a.maxY, b.maxY)
+    c
   }
 
   def computeBoundaries(bodies: Seq[Body]): Boundaries = timeStats.timed("boundaries") {
