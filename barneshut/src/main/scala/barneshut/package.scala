@@ -175,6 +175,7 @@ package object barneshut {
     for (i <- 0 until matrix.length) matrix(i) = new ConcBuffer
 
     def +=(b: Body): SectorMatrix = {
+
       ???
       this
     }
@@ -182,7 +183,9 @@ package object barneshut {
     def apply(x: Int, y: Int) = matrix(y * sectorPrecision + x)
 
     def combine(that: SectorMatrix): SectorMatrix = {
-      ???
+
+      for (i <- 0 until matrix.length) matrix(i).combine(that.matrix(i))
+      this
     }
 
     def toQuad(parallelism: Int): Quad = {
